@@ -1,0 +1,40 @@
+#include<GL/glut.h>
+#include<GL/glu.h>
+#include<stdio.h>
+float squareVer[4][2]={{-0.25,0},{0,0},{0.0,0.25},{-0.25,0.25}};
+float shearing_factor=.25;
+void shearing()
+{
+glClear(GL_COLOR_BUFFER_BIT);
+glEnable(GL_BLEND);
+glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+glColor3f(1.0,0.0,0.0);
+glBegin(GL_QUADS);
+for(int i=0;i<4;i++)
+    glVertex2f(squareVer[i][0],squareVer[i][1]);
+glEnd();
+
+glColor4f(0.0,0.0,1.0,0.60);
+glBegin(GL_QUADS);
+for(int i=0;i<4;i++)
+{squareVer[i][1]=squareVer[i][1]+squareVer[i][0]*shearing_factor;
+    glVertex2f(squareVer[i][0],squareVer[i][1]);}
+glEnd();
+
+glDisable(GL_BLEND);
+glFlush();
+
+}
+int main(int a ,char *b[])
+{
+    glutInit(&a,b);
+    glutInitWindowPosition(10,10);
+    glutInitWindowSize(500,500);
+    glutInitDisplayMode(GLUT_RGB|GLUT_SINGLE);
+    glutCreateWindow("X direction Shearing");
+    glutDisplayFunc(shearing);
+    glutMainLoop();
+    return EXIT_SUCCESS;
+
+
+}
